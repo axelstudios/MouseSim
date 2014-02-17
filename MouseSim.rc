@@ -1,0 +1,25 @@
+IDI_ICON1   ICON  DISCARDABLE  "images/mouse.ico"
+
+1 RT_MANIFEST "MouseSim.exe.manifest"
+1 VERSIONINFO
+FILEVERSION 1,0,0,0
+PRODUCTVERSION 1,0,0
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName",  "Alex Swindler\0"
+            VALUE "FileDescription",  "MouseSim\0"
+            VALUE "FileVersion",      "1.0.0.0\0"
+            VALUE "InternalName",     "MouseSim\0"
+            VALUE "OriginalFilename", "MouseSim.exe\0"
+            VALUE "ProductName",      "MouseSim\0"
+            VALUE "ProductVersion",   "1.0.0\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
