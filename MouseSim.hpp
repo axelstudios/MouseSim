@@ -2,19 +2,19 @@
 #define MOUSESIM_HPP
 
 #include <QSystemTrayIcon>
-#include <QDialog>
+#include <QWidget>
 
 class QAction;
 class QMenu;
 
-class MouseSim : public QDialog
+class MouseSim : public QWidget
 {
   Q_OBJECT
 
-  public:
+ public:
   MouseSim();
 
-  private slots:
+ private slots:
   void iconActivated(QSystemTrayIcon::ActivationReason reason);
   void sendInput();
   void enable();

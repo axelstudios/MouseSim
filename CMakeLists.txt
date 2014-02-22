@@ -7,7 +7,7 @@ mark_as_advanced(CMAKE_CONFIGURATION_TYPES)
 
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt5Widgets)
+find_package(Qt5Widgets REQUIRED)
 mark_as_advanced(Qt5Core_DIR)
 mark_as_advanced(Qt5Gui_DIR)
 mark_as_advanced(Qt5Widgets_DIR)

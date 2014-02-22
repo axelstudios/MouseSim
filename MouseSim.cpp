@@ -25,7 +25,6 @@ MouseSim::MouseSim()
   trayIconMenu->addAction(quitAction);
 
   trayIcon = new QSystemTrayIcon(this);
-  trayIcon->setToolTip("MouseSim: Enabled");
   trayIcon->setContextMenu(trayIconMenu);
 
   connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
