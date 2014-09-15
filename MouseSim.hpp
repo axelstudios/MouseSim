@@ -6,29 +6,42 @@
 
 class QAction;
 class QMenu;
+class QSharedMemory;
+class QSettings;
 
 class MouseSim : public QWidget
 {
   Q_OBJECT
 
- public:
+public:
   MouseSim();
+  ~MouseSim();
 
- private slots:
+private slots:
   void iconActivated(QSystemTrayIcon::ActivationReason reason);
   void sendInput();
   void enable();
   void disable();
+  void autostart(bool enabled);
+  void about();
 
- private:
+private:
+  QIcon *m_activated;
+  QIcon *m_deactivated;
+
   QTimer *m_timer;
 
-  QAction *enableAction;
-  QAction *disableAction;
-  QAction *quitAction;
+  QAction *m_enableAction;
+  QAction *m_disableAction;
+  QAction *m_autostartAction;
+  QAction *m_aboutAction;
+  QAction *m_quitAction;
 
-  QSystemTrayIcon *trayIcon;
-  QMenu *trayIconMenu;
+  QSystemTrayIcon *m_trayIcon;
+  QMenu *m_trayIconMenu;
+
+  QSettings *m_settings;
+  QSharedMemory *m_mem;
 };
 
-#endif MOUSESIM_HPP
+#endif // MOUSESIM_HPP

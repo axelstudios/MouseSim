@@ -1,6 +1,5 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
-  <file>images/mouse.png</file>
-  <file>images/mouse-gray.png</file>
+  <file>icons/mouse_16.png</file>
 </qresource>
 </RCC>

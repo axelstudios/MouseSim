@@ -1,0 +1,5 @@
+DESCRIPTION
+===========
+
+MouseSim is a simple tool to simulate mouse movement and avoid computer inactivity.
+

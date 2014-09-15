@@ -1,0 +1,25 @@
+IDI_ICON1   ICON  DISCARDABLE  "icons/mouse.ico"
+
+1 RT_MANIFEST "MouseSim.exe.manifest"
+1 VERSIONINFO
+FILEVERSION ${CMAKE_VERSION_MAJOR},${CMAKE_VERSION_MINOR},${CMAKE_VERSION_PATCH},0
+PRODUCTVERSION ${CMAKE_VERSION_MAJOR},${CMAKE_VERSION_MINOR},${CMAKE_VERSION_PATCH}
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName",      "Alex Swindler\0"
+            VALUE "FileDescription",  "MouseSim\0"
+            VALUE "FileVersion",      "${CMAKE_VERSION_MAJOR}.${CMAKE_VERSION_MINOR}.${CMAKE_VERSION_PATCH}.0\0"
+            VALUE "InternalName",     "MouseSim\0"
+            VALUE "OriginalFilename", "MouseSim.exe\0"
+            VALUE "ProductName",      "MouseSim\0"
+            VALUE "ProductVersion",   "${CMAKE_VERSION_MAJOR}.${CMAKE_VERSION_MINOR}.${CMAKE_VERSION_PATCH}\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END

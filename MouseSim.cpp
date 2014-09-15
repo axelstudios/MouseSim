@@ -1,40 +1,77 @@
 #include "MouseSim.hpp"
+#include <AboutBox.hpp>
 
 #include <QAction>
 #include <QCoreApplication>
 #include <QMenu>
+#include <QMessageBox>
+#include <QSettings>
+#include <QSharedMemory>
 #include <QTimer>
 
 #include <Windows.h>
 
 MouseSim::MouseSim()
 {
-  enableAction = new QAction(tr("&Enable"), this);
-  connect(enableAction, SIGNAL(triggered()), this, SLOT(enable()));
+  m_mem = new QSharedMemory("MouseSimRunning", this);
+  if (!m_mem->create(1)) QTimer::singleShot(0, qApp, SLOT(quit()));
 
-  disableAction = new QAction(tr("&Disable"), this);
-  connect(disableAction, SIGNAL(triggered()), this, SLOT(disable()));
+  QImage img = QImage(":/icons/mouse_16.png");
+  m_activated = new QIcon(QPixmap::fromImage(img));
+  QSize size = img.size();
+  int width = size.width(),
+      height = size.height();
+  
+  for (int i = 0; i < width; ++i) {
+    for (int j = 0; j < height; ++j) {
+      QRgb pixel = img.pixel(i, j);
+      int gray = qGray(pixel),
+          alpha = qAlpha(pixel);
+      img.setPixel(i, j, qRgba(gray, gray, gray, alpha));
+    }
+  }
+  m_deactivated = new QIcon(QPixmap::fromImage(img));
 
-  quitAction = new QAction(tr("&Quit"), this);
-  connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+  m_settings = new QSettings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
+  bool checked = !m_settings->value("MouseSim", QVariant("")).toString().isEmpty();
 
-  trayIconMenu = new QMenu(this);
-  trayIconMenu->addAction(enableAction);
-  trayIconMenu->addAction(disableAction);
-  trayIconMenu->addSeparator();
-  trayIconMenu->addAction(quitAction);
+  m_enableAction = new QAction("&Enable", this);
+  m_disableAction = new QAction("&Disable", this);
+  m_autostartAction = new QAction("Autostart &MouseSim", this);
+  m_autostartAction->setCheckable(true);
+  m_autostartAction->setChecked(checked);
+  m_aboutAction = new QAction("&About MouseSim", this);
+  m_quitAction = new QAction("&Quit", this);
 
-  trayIcon = new QSystemTrayIcon(this);
-  trayIcon->setContextMenu(trayIconMenu);
+  connect(m_enableAction, &QAction::triggered, this, &MouseSim::enable);
+  connect(m_disableAction, &QAction::triggered, this, &MouseSim::disable);
+  connect(m_autostartAction, &QAction::triggered, this, &MouseSim::autostart);
+  connect(m_aboutAction, &QAction::triggered, this, &MouseSim::about);
+  connect(m_quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
 
-  connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-    this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+  m_trayIconMenu = new QMenu(this);
+  m_trayIconMenu->addAction(m_enableAction);
+  m_trayIconMenu->addAction(m_disableAction);
+  m_trayIconMenu->addAction(m_autostartAction);
+  m_trayIconMenu->addAction(m_aboutAction);
+  m_trayIconMenu->addSeparator();
+  m_trayIconMenu->addAction(m_quitAction);
+
+  m_trayIcon = new QSystemTrayIcon(this);
+  m_trayIcon->setContextMenu(m_trayIconMenu);
+
+  connect(m_trayIcon, &QSystemTrayIcon::activated, this, &MouseSim::iconActivated);
 
   m_timer = new QTimer(this);
-  connect(m_timer, SIGNAL(timeout()), this, SLOT(sendInput()));
+  connect(m_timer, &QTimer::timeout, this, &MouseSim::sendInput);
 
   enable();
-  trayIcon->show();
+  m_trayIcon->show();
+}
+
+MouseSim::~MouseSim()
+{
+  m_mem->detach();
 }
 
 void MouseSim::iconActivated(QSystemTrayIcon::ActivationReason reason)
@@ -65,18 +102,37 @@ void MouseSim::sendInput()
 void MouseSim::enable()
 {
   m_timer->start(1000);
-  trayIcon->setIcon(QIcon(":/images/mouse.png"));
-  trayIcon->setToolTip("MouseSim: Enabled");
+  m_trayIcon->setIcon(*m_activated);
+  m_trayIcon->setToolTip("MouseSim: Enabled");
   sendInput();
-  enableAction->setDisabled(true);
-  disableAction->setEnabled(true);
+  m_enableAction->setDisabled(true);
+  m_disableAction->setEnabled(true);
 }
 
 void MouseSim::disable()
 {
   m_timer->stop();
-  trayIcon->setIcon(QIcon(":/images/mouse-gray.png"));
-  trayIcon->setToolTip("MouseSim: Disabled");
-  disableAction->setDisabled(true);
-  enableAction->setEnabled(true);
+  
+  m_trayIcon->setIcon(*m_deactivated);
+  m_trayIcon->setToolTip("MouseSim: Disabled");
+  m_disableAction->setDisabled(true);
+  m_enableAction->setEnabled(true);
+}
+
+void MouseSim::autostart(bool enabled)
+{
+  if (enabled) {
+    m_settings->setValue("MouseSim", "\"" + QCoreApplication::applicationFilePath().replace("/", "\\") + "\"");
+  } else {
+    m_settings->remove("MouseSim");
+  }
+}
+
+void MouseSim::about()
+{
+  QMessageBox about(this);
+  about.setText(MOUSESIM_ABOUTBOX);
+  about.setStyleSheet("qproperty-alignment: AlignCenter;");
+  about.setWindowTitle("About MouseSim");
+  about.exec();
 }

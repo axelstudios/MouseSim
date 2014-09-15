@@ -1,0 +1,10 @@
+#ifndef MOUSESIM_ABOUTBOX
+
+#define MOUSESIM_ABOUTBOX \
+"<h2>MouseSim</h2> \
+<p>Version: ${CMAKE_VERSION_MAJOR}.${CMAKE_VERSION_MINOR}.${CMAKE_VERSION_PATCH}</p> \
+<p>Build Number: ${CMAKE_VERSION_BUILD}</p> \
+<p>Copyright &copy; 2014 Alex Swindler</p> \
+<p><a href='https://github.com/axelstudios/MouseSim'>MouseSim</a> is a simple tool to simulate mouse movement and avoid computer inactivity.</p>"
+
+#endif // MOUSESIM_ABOUTBOX
