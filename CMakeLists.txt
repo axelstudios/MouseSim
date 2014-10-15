@@ -34,6 +34,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 find_package(Qt5Widgets REQUIRED)
 mark_as_advanced(
@@ -42,10 +43,9 @@ mark_as_advanced(
   Qt5Widgets_DIR
 )
 
-qt5_add_resources(MouseSim_qrc MouseSim.qrc)
 configure_file(AboutBox.hpp.in "${CMAKE_CURRENT_BINARY_DIR}/AboutBox.hpp")
 configure_file(MouseSim.rc.in "${CMAKE_CURRENT_BINARY_DIR}/MouseSim.rc")
-add_executable(MouseSim WIN32 main.cpp MouseSim.cpp ${MouseSim_qrc} "${CMAKE_CURRENT_BINARY_DIR}/MouseSim.rc")
+add_executable(MouseSim WIN32 main.cpp MouseSim.cpp MouseSim.qrc "${CMAKE_CURRENT_BINARY_DIR}/MouseSim.rc")
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Build Configuration" FORCE)
 if(BUILD_STATIC)
@@ -75,7 +75,7 @@ if(BUILD_STATIC)
     set(CMAKE_CONFIGURATION_TYPES "Release" CACHE STRING "Build Configuration" FORCE)
   endif()
 else()
-  qt5_use_modules(MouseSim Widgets)
+  target_link_libraries(MouseSim Qt5::Widgets)
 
   get_target_property(QPA_PLUGIN Qt5::QWindowsIntegrationPlugin LOCATION)
   get_filename_component(QPA_PLUGIN_NAME "${QPA_PLUGIN}" NAME)

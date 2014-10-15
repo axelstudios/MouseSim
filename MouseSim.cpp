@@ -130,7 +130,7 @@ void MouseSim::autostart(bool enabled)
 
 void MouseSim::about()
 {
-  QMessageBox about(this);
+  QMessageBox about(nullptr);
   about.setText(MOUSESIM_ABOUTBOX);
   about.setStyleSheet("qproperty-alignment: AlignCenter;");
   about.setWindowTitle("About MouseSim");
