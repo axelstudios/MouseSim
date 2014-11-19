@@ -3,7 +3,7 @@ cmake_policy(SET CMP0020 NEW)
 cmake_policy(SET CMP0043 NEW)
 cmake_policy(SET CMP0048 NEW)
 
-project(MouseSim VERSION 1.1.0)
+project(MouseSim VERSION 1.1.1)
 
 find_package(Git)
 if(GIT_FOUND)
