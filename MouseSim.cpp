@@ -13,6 +13,8 @@
 
 MouseSim::MouseSim()
 {
+  m_appPath = new QString("\"" + QCoreApplication::applicationFilePath().replace("/", "\\") + "\"");
+
   m_mem = new QSharedMemory("MouseSimRunning", this);
   if (!m_mem->create(1)) QTimer::singleShot(0, qApp, SLOT(quit()));
 
@@ -33,7 +35,7 @@ MouseSim::MouseSim()
   m_deactivated = new QIcon(QPixmap::fromImage(img));
 
   m_settings = new QSettings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
-  bool checked = !m_settings->value("MouseSim", QVariant("")).toString().isEmpty();
+  bool checked = m_settings->value("MouseSim", QVariant("")).toString() == m_appPath;
 
   m_enableAction = new QAction("&Enable", this);
   m_disableAction = new QAction("&Disable", this);
@@ -122,7 +124,7 @@ void MouseSim::disable()
 void MouseSim::autostart(bool enabled)
 {
   if (enabled) {
-    m_settings->setValue("MouseSim", "\"" + QCoreApplication::applicationFilePath().replace("/", "\\") + "\"");
+    m_settings->setValue("MouseSim", m_appPath);
   } else {
     m_settings->remove("MouseSim");
   }
