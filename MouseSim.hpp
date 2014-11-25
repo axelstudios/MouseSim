@@ -26,7 +26,7 @@ private slots:
   void about();
 
 private:
-  QString *m_appPath;
+  const QString m_appPath;
 
   QIcon *m_activated;
   QIcon *m_deactivated;

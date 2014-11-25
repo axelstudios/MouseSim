@@ -11,10 +11,9 @@
 
 #include <Windows.h>
 
-MouseSim::MouseSim()
+MouseSim::MouseSim() :
+  m_appPath("\"" + QCoreApplication::applicationFilePath().replace("/", "\\") + "\"")
 {
-  m_appPath = new QString("\"" + QCoreApplication::applicationFilePath().replace("/", "\\") + "\"");
-
   m_mem = new QSharedMemory("MouseSimRunning", this);
   if (!m_mem->create(1)) QTimer::singleShot(0, qApp, SLOT(quit()));
 
