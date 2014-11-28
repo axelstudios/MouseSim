@@ -22,7 +22,7 @@ MouseSim::MouseSim() :
   QSize size = img.size();
   int width = size.width(),
       height = size.height();
-  
+
   for (int i = 0; i < width; ++i) {
     for (int j = 0; j < height; ++j) {
       QRgb pixel = img.pixel(i, j);
@@ -113,7 +113,7 @@ void MouseSim::enable()
 void MouseSim::disable()
 {
   m_timer->stop();
-  
+
   m_trayIcon->setIcon(*m_deactivated);
   m_trayIcon->setToolTip("MouseSim: Disabled");
   m_disableAction->setDisabled(true);

@@ -491,21 +491,21 @@ FunctionEnd
 !insertmacro StrStrx "un."
 
 Function Trim ; Added by Pelaca
-	Exch $R1
-	Push $R2
+  Exch $R1
+  Push $R2
 Loop:
-	StrCpy $R2 "$R1" 1 -1
-	StrCmp "$R2" " " RTrim
-	StrCmp "$R2" "$\n" RTrim
-	StrCmp "$R2" "$\r" RTrim
-	StrCmp "$R2" ";" RTrim
-	GoTo Done
+  StrCpy $R2 "$R1" 1 -1
+  StrCmp "$R2" " " RTrim
+  StrCmp "$R2" "$\n" RTrim
+  StrCmp "$R2" "$\r" RTrim
+  StrCmp "$R2" ";" RTrim
+  GoTo Done
 RTrim:
-	StrCpy $R1 "$R1" -1
-	Goto Loop
+  StrCpy $R1 "$R1" -1
+  Goto Loop
 Done:
-	Pop $R2
-	Exch $R1
+  Pop $R2
+  Exch $R1
 FunctionEnd
 
 Function ConditionalAddToRegistry
@@ -1013,24 +1013,24 @@ FunctionEnd
 ; Assumes no more than 256 sections are defined
 Var GetInstalledSize.total
 Function GetInstalledSize
-	Push $0
-	Push $1
-	StrCpy $GetInstalledSize.total 0
-	${ForEach} $1 0 256 + 1
-		${if} ${SectionIsSelected} $1
-			SectionGetSize $1 $0
-			IntOp $GetInstalledSize.total $GetInstalledSize.total + $0
-		${Endif}
- 
-		; Error flag is set when an out-of-bound section is referenced
-		${if} ${errors}
-			${break}
-		${Endif}
-	${Next}
- 
-	ClearErrors
-	Pop $1
-	Pop $0
-	IntFmt $GetInstalledSize.total "0x%08X" $GetInstalledSize.total
-	Push $GetInstalledSize.total
+  Push $0
+  Push $1
+  StrCpy $GetInstalledSize.total 0
+  ${ForEach} $1 0 256 + 1
+    ${if} ${SectionIsSelected} $1
+      SectionGetSize $1 $0
+      IntOp $GetInstalledSize.total $GetInstalledSize.total + $0
+    ${Endif}
+
+    ; Error flag is set when an out-of-bound section is referenced
+    ${if} ${errors}
+      ${break}
+    ${Endif}
+  ${Next}
+
+  ClearErrors
+  Pop $1
+  Pop $0
+  IntFmt $GetInstalledSize.total "0x%08X" $GetInstalledSize.total
+  Push $GetInstalledSize.total
 FunctionEnd
