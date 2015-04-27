@@ -3,7 +3,7 @@ cmake_policy(SET CMP0020 NEW)
 cmake_policy(SET CMP0043 NEW)
 cmake_policy(SET CMP0048 NEW)
 
-project(MouseSim VERSION 1.1.1)
+project(MouseSim VERSION 1.1.2)
 
 find_package(Git)
 if(GIT_FOUND)
@@ -36,6 +36,9 @@ mark_as_advanced(
   Qt5Gui_DIR
   Qt5Widgets_DIR
 )
+if(${Qt5Widgets_VERSION} VERSION_LESS "5.4")
+  message(FATAL_ERROR "Minimum supported Qt is v5.4")
+endif()
 
 configure_file(AboutBox.hpp.in "${CMAKE_CURRENT_BINARY_DIR}/AboutBox.hpp")
 configure_file(MouseSim.rc.in "${CMAKE_CURRENT_BINARY_DIR}/MouseSim.rc")
@@ -50,10 +53,12 @@ if(BUILD_STATIC)
 
   add_definitions(-DBUILD_STATIC)
 
-  target_link_libraries(MouseSim Qt5::OpenGL OpenGL32 imm32 winmm ws2_32)
-
   get_target_property(QtCore_LOCATION Qt5::Core LOCATION)
   get_filename_component(QT_LIB_DIR ${QtCore_LOCATION} PATH)
+
+  find_library(HARFBUZZ qtharfbuzzng ${QT_LIB_DIR})
+  mark_as_advanced(HARFBUZZ)
+  target_link_libraries(MouseSim Qt5::OpenGL OpenGL32 ${HARFBUZZ} imm32 winmm ws2_32)
 
   find_library(PLATFORM_SUPPORT Qt5PlatformSupport ${QT_LIB_DIR})
   find_library(WIN_PLATFORM qwindows ${QT_LIB_DIR}/../plugins/platforms/)
