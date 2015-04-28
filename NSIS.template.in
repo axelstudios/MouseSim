@@ -589,7 +589,7 @@ FunctionEnd
   @CPACK_NSIS_PAGE_COMPONENTS@
 
   !insertmacro MUI_PAGE_INSTFILES
-  !define MUI_FINISHPAGE_RUN "$INSTDIR\MouseSim.exe"
+  !define MUI_FINISHPAGE_RUN "$INSTDIR\@CPACK_NSIS_PACKAGE_NAME@.exe"
   !insertmacro MUI_PAGE_FINISH
 
   !insertmacro MUI_UNPAGE_CONFIRM
@@ -840,6 +840,8 @@ FunctionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
+  KillProcWMI::KillProc "@CPACK_NSIS_PACKAGE_NAME@.exe"
+
   ReadRegStr $START_MENU SHCTX \
    "Software\Microsoft\Windows\CurrentVersion\Uninstall\@CPACK_PACKAGE_INSTALL_REGISTRY_KEY@" "StartMenu"
   ;MessageBox MB_OK "Start menu is in: $START_MENU"
