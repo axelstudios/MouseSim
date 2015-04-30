@@ -15,7 +15,7 @@ class MouseSim : public QWidget
 
 public:
   MouseSim();
-  ~MouseSim();
+  virtual ~MouseSim() override;
 
 private slots:
   void iconActivated(QSystemTrayIcon::ActivationReason reason);
@@ -25,7 +25,6 @@ private slots:
   void autostart(bool enabled);
   void about();
 
-private:
   const QString m_appPath;
 
   QIcon *m_activated;

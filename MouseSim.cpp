@@ -17,24 +17,24 @@ MouseSim::MouseSim() :
   m_mem = new QSharedMemory("MouseSimRunning", this);
   if (!m_mem->create(1)) QTimer::singleShot(0, qApp, SLOT(quit()));
 
-  QImage img = QImage(":/icons/mouse_16.png");
+  auto img = QImage(":/icons/mouse_16.png");
   m_activated = new QIcon(QPixmap::fromImage(img));
-  QSize size = img.size();
-  int width = size.width(),
+  auto size = img.size();
+  auto width = size.width(),
       height = size.height();
 
-  for (int i = 0; i < width; ++i) {
-    for (int j = 0; j < height; ++j) {
-      QRgb pixel = img.pixel(i, j);
-      int gray = qGray(pixel),
-          alpha = qAlpha(pixel);
+  for (auto i = 0; i < width; ++i) {
+    for (auto j = 0; j < height; ++j) {
+      auto pixel = img.pixel(i, j);
+      auto gray = qGray(pixel),
+           alpha = qAlpha(pixel);
       img.setPixel(i, j, qRgba(gray, gray, gray, alpha));
     }
   }
   m_deactivated = new QIcon(QPixmap::fromImage(img));
 
   m_settings = new QSettings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
-  bool checked = m_settings->value("MouseSim", QVariant("")).toString() == m_appPath;
+  auto checked = m_settings->value("MouseSim", QVariant("")).toString() == m_appPath;
 
   m_enableAction = new QAction("&Enable", this);
   m_disableAction = new QAction("&Disable", this);

@@ -30,6 +30,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+add_definitions(/W4 /WX /MP)
+
 find_package(Qt5Widgets REQUIRED)
 mark_as_advanced(
   Qt5Core_DIR
