@@ -21,7 +21,7 @@ MouseSim::MouseSim() :
   m_activated = new QIcon(QPixmap::fromImage(img));
   auto size = img.size();
   auto width = size.width(),
-      height = size.height();
+       height = size.height();
 
   for (auto i = 0; i < width; ++i) {
     for (auto j = 0; j < height; ++j) {
@@ -68,11 +68,6 @@ MouseSim::MouseSim() :
 
   enable();
   m_trayIcon->show();
-}
-
-MouseSim::~MouseSim()
-{
-  m_mem->detach();
 }
 
 void MouseSim::iconActivated(QSystemTrayIcon::ActivationReason reason)

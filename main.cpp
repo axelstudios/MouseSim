@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
   app.setApplicationName("MouseSim");
   app.setQuitOnLastWindowClosed(false);
 
-  MouseSim();
+  MouseSim mousesim;
 
   return app.exec();
 }
