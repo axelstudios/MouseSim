@@ -81,13 +81,12 @@ else()
   get_target_property(QPA_PLUGIN Qt5::QWindowsIntegrationPlugin LOCATION)
   get_filename_component(QPA_PLUGIN_NAME "${QPA_PLUGIN}" NAME)
   install(PROGRAMS "${QPA_PLUGIN}"
-          DESTINATION "platforms"
+    DESTINATION "platforms"
   )
 endif()
 
 install(TARGETS MouseSim
-  RUNTIME
-  DESTINATION /
+  RUNTIME DESTINATION /
 )
 
 set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP ON)

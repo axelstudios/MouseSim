@@ -1,0 +1,27 @@
+version: v1.1.2-{build}
+os: MinGW
+shallow_clone: true
+configuration: Release
+platform: x64
+
+init:
+  - git config --global core.autocrlf input
+
+install:
+  - choco install nsis.install -pre -y
+  - appveyor DownloadFile http://www.chironexsoftware.com/downloads/KillProcWMI.zip
+  - 7z e KillProcWMI.zip -o"C:\Program Files (x86)\NSIS\Plugins\x86-ansi" KillProcWMI.dll
+  - set PATH=%PATH%;C:\Qt\5.4\msvc2013_64_opengl\bin
+
+build_script:
+  - mkdir build
+  - cd build
+  - cmake .. -G "Visual Studio 12 2013 Win64"
+  - cmake --build . --config %CONFIGURATION% --target PACKAGE
+
+test: off
+
+artifacts:
+  - path: build\MouseSim-*.exe
+
+deploy: off
