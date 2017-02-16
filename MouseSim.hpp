@@ -15,10 +15,9 @@ class MouseSim : public QWidget
 
 public:
   MouseSim();
-  virtual ~MouseSim() override = default;
 
 private slots:
-  void iconActivated(QSystemTrayIcon::ActivationReason reason) const;
+  void iconActivated(const QSystemTrayIcon::ActivationReason reason) const;
   static void sendInput();
   void enable() const;
   void disable() const;

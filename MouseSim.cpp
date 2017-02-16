@@ -25,8 +25,8 @@ MouseSim::MouseSim() :
   for (auto i = 0; i < width; ++i) {
     for (auto j = 0; j < height; ++j) {
       auto pixel = img.pixel(i, j);
-      auto gray = qGray(pixel),
-           alpha = qAlpha(pixel);
+      auto gray = qGray(pixel);
+      auto alpha = qAlpha(pixel);
       img.setPixel(i, j, qRgba(gray, gray, gray, alpha));
     }
   }
@@ -125,8 +125,6 @@ void MouseSim::autostart(const bool enabled) const
 
 void MouseSim::about()
 {
-  QMessageBox about(nullptr);
-  about.setText(MOUSESIM_ABOUTBOX);
-  about.setWindowTitle("About MouseSim");
+  QMessageBox about(QMessageBox::NoIcon, "About MouseSim", MOUSESIM_ABOUTBOX);
   about.exec();
 }

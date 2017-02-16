@@ -1,12 +1,13 @@
 #ifndef MOUSESIM_ABOUTBOX
 
-#define MOUSESIM_ABOUTBOX \
-"<div style=\"margin-right: 20px; text-align: center;\"> \
-  <h2>MouseSim</h2> \
-  <p>Version: ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}</p> \
-  <p>Build Number: ${PROJECT_VERSION_TWEAK}</p> \
-  <p>Copyright &copy; 2017 Alex Swindler</p> \
-  <p><a href='https://github.com/axelstudios/MouseSim'>MouseSim</a> is a simple tool to simulate mouse movement and avoid computer inactivity.</p> \
-</div>"
+constexpr const char * MOUSESIM_ABOUTBOX = R"(
+<div style="margin-right: 20px; text-align: center;">
+  <h2>MouseSim</h2>
+  <p>Version: ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}</p>
+  <p>Build Number: ${PROJECT_VERSION_TWEAK}</p>
+  <p>Copyright &copy; 2017 Alex Swindler</p>
+  <p><a href='https://github.com/axelstudios/MouseSim'>MouseSim</a> is a simple tool to simulate mouse movement and avoid computer inactivity.</p>
+</div>
+)";
 
 #endif // MOUSESIM_ABOUTBOX
