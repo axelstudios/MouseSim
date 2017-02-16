@@ -18,12 +18,12 @@ public:
   virtual ~MouseSim() override = default;
 
 private slots:
-  void iconActivated(QSystemTrayIcon::ActivationReason reason);
-  void sendInput();
-  void enable();
-  void disable();
-  void autostart(bool enabled);
-  void about();
+  void iconActivated(QSystemTrayIcon::ActivationReason reason) const;
+  static void sendInput();
+  void enable() const;
+  void disable() const;
+  void autostart(const bool enabled) const;
+  static void about();
 
 private:
   const QString m_appPath;

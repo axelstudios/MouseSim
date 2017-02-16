@@ -1,7 +1,6 @@
 #include "MouseSim.hpp"
-#include <AboutBox.hpp>
+#include "AboutBox.hpp"
 
-#include <QAction>
 #include <QCoreApplication>
 #include <QMenu>
 #include <QMessageBox>
@@ -70,7 +69,7 @@ MouseSim::MouseSim() :
   m_trayIcon->show();
 }
 
-void MouseSim::iconActivated(QSystemTrayIcon::ActivationReason reason)
+void MouseSim::iconActivated(QSystemTrayIcon::ActivationReason reason) const
 {
   if (reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::DoubleClick) {
     if (m_timer->isActive()) {
@@ -95,7 +94,7 @@ void MouseSim::sendInput()
   SendInput(1, &input, sizeof(INPUT));
 }
 
-void MouseSim::enable()
+void MouseSim::enable() const
 {
   m_timer->start(1000);
   m_trayIcon->setIcon(*m_activated);
@@ -105,7 +104,7 @@ void MouseSim::enable()
   m_disableAction->setEnabled(true);
 }
 
-void MouseSim::disable()
+void MouseSim::disable() const
 {
   m_timer->stop();
 
@@ -115,7 +114,7 @@ void MouseSim::disable()
   m_enableAction->setEnabled(true);
 }
 
-void MouseSim::autostart(bool enabled)
+void MouseSim::autostart(const bool enabled) const
 {
   if (enabled) {
     m_settings->setValue("MouseSim", m_appPath);
@@ -128,7 +127,6 @@ void MouseSim::about()
 {
   QMessageBox about(nullptr);
   about.setText(MOUSESIM_ABOUTBOX);
-  about.setStyleSheet("qproperty-alignment: AlignCenter;");
   about.setWindowTitle("About MouseSim");
   about.exec();
 }

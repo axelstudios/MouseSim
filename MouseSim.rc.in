@@ -13,6 +13,7 @@ BEGIN
             VALUE "FileDescription",  "MouseSim\0"
             VALUE "FileVersion",      "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}.0\0"
             VALUE "InternalName",     "MouseSim\0"
+            VALUE "LegalCopyright",   "Copyright © 2017 Alex Swindler\0"
             VALUE "OriginalFilename", "MouseSim.exe\0"
             VALUE "ProductName",      "MouseSim\0"
             VALUE "ProductVersion",   "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}\0"
