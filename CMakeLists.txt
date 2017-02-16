@@ -41,8 +41,8 @@ mark_as_advanced(
   Qt5Widgets_DIR
 )
 
-if(${Qt5Widgets_VERSION} VERSION_LESS "5.8")
-  message(FATAL_ERROR "Minimum supported Qt is v5.8.0")
+if(${Qt5Widgets_VERSION} VERSION_LESS "5.7.1")
+  message(FATAL_ERROR "Minimum supported Qt is v5.7.1")
 endif()
 
 configure_file(AboutBox.hpp.in "${CMAKE_CURRENT_BINARY_DIR}/AboutBox.hpp")
